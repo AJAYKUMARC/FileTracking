@@ -113,6 +113,10 @@ namespace FileTracking
                 return View();
             }
             var result = context.Masters.Where(x => x.Barcode == barCode).ToList();
+            if (result.Count > 0)
+            {
+                ViewData["DataFound"] = false;
+            }
             return View(result);
         }
 

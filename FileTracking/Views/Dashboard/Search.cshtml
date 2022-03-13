@@ -36,8 +36,11 @@
     }
     else
     {
-        <div class="alert alert-secondary" role="alert">
-            Data not found
-        </div>
+        @if (ViewData["DataFound"] != null)
+        {
+            <div class="alert alert-secondary" role="alert">
+                Data not found
+            </div>
+        }
     }
 </div>
