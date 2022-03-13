@@ -1,4 +1,5 @@
-﻿<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Submit" enctype="multipart/form-data">
+﻿<p class="h6">Bulk Upload</p>
+<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Submit" enctype="multipart/form-data">
     @if (ViewData["IsSuccess"] != null && (bool)ViewData["IsSuccess"] == true)
     {
         <div class="alert alert-success" role="alert">
@@ -20,10 +21,10 @@
     </div>
 </form>
 <hr />
-<label> You can manually upload data by using the below form</label>
+<p class="h6">Update/Save Record</p>
 <hr />
 <form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Save">
-     @if (ViewData["IsSave"] != null && (bool)ViewData["IsSave"] == true)
+    @if (ViewData["IsSave"] != null && (bool)ViewData["IsSave"] == true)
     {
         <div class="alert alert-success" role="alert">
             Data Uploaded Successfully.
@@ -38,7 +39,7 @@
 
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Bar Code</label>
-        <input type="text" class="form-control" id="barcode" name="Barcode" placeholder="Enter BarCode" required>
+        <input type="text" class="form-control" id="barcode" name="Barcode" placeholder="Enter Bar Code" onchange="getData()" required>
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">File Name</label>
@@ -50,5 +51,29 @@
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </div>
+</form>
+<hr />
+<p class="h6">Delete Record</p>
+<hr />
+<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Delete">
+    @if (ViewData["IsDeleted"] != null && (bool)ViewData["IsDeleted"] == true)
+    {
+        <div class="alert alert-success" role="alert">
+            Deleted Successfully.
+        </div>
+    }
+    @if (ViewData["IsDeleted"] != null && (bool)ViewData["IsDeleted"] == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            Something Went Wrong!
+        </div>
+    }
+    <div class="col-auto">
+        <label for="uniqueId" class="visually-hidden"></label>
+        <input type="number" name="id" class="form-control" required>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Delete</button>
     </div>
 </form>

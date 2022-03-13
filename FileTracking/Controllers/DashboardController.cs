@@ -135,6 +135,16 @@ namespace FileTracking
                     ViewData["IsSave"] = false;
                     return View("Upload");
                 }
+                if (context.Masters.Any(x => x.Barcode == data.Barcode))
+                {
+                    var existingRecord = context.Masters.FirstOrDefault(X => X.Barcode == data.Barcode);
+                    existingRecord.Uploaddate = DateTime.UtcNow;
+                    existingRecord.Filename = data.Filename;
+                    existingRecord.Department = data.Department;
+                    context.SaveChanges();
+                    ViewData["IsSave"] = true;
+                    return View("Upload");
+                }
                 data.Uploaddate = DateTime.UtcNow;
                 context.Masters.Add(data);
                 var count = context.SaveChanges();
@@ -153,9 +163,34 @@ namespace FileTracking
             }
         }
 
+        public IActionResult Delete(int id)
+        {
+            if (id <= 0)
+            {
+                ViewData["IsDeleted"] = false;
+                return View("Upload");
+            }
+            if (!context.Masters.Any(x => x.Id == id))
+            {
+                ViewData["IsDeleted"] = false;
+                return View("Upload");
+            }
+            var delRecord = new Master { Id = id };
+            var isDeleted = context.Masters.Remove(delRecord);
+            context.SaveChanges();
+            ViewData["IsDeleted"] = true;
+            return View("Upload");
+        }
+
         public IActionResult GetAll()
         {
-            return View("Search",context.Masters.ToList());
+            return View("Search", context.Masters.ToList());
+        }
+
+        public IActionResult GetFileDetails(string barCode)
+        {
+            var currentRecord = context.Masters.FirstOrDefault(x => x.Barcode == barCode);
+            return Json(currentRecord);
         }
     }
 }
