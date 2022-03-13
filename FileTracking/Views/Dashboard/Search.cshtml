@@ -1,0 +1,43 @@
+﻿@using FileTracking.Models
+@model IList<Master>;
+<form class="row g-3">
+    <div class="col-auto">
+        <label for="barcode" class="visually-hidden"></label>
+        <input type="text" class="form-control" id="barcode" name="barCode" placeholder="BAR CODE">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+</form>
+<div>
+    @if (Model != null && Model.Count > 0)
+    {
+        <table id="resultTable" class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th>DATE</th>
+                    <th>BAR CODE</th>
+                    <th>FILE NAME</th>
+                    <th>DEPARTMENT</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.Uploaddate</td>
+                        <td>@row.Barcode</td>
+                        <td>@row.Filename</td>
+                        <td>@row.Department</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-secondary" role="alert">
+            Data not found
+        </div>
+    }
+</div>

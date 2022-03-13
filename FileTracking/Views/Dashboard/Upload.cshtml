@@ -1,0 +1,54 @@
+﻿<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Submit" enctype="multipart/form-data">
+    @if (ViewData["IsSuccess"] != null && (bool)ViewData["IsSuccess"] == true)
+    {
+        <div class="alert alert-success" role="alert">
+            Data Uploaded Successfully.
+        </div>
+    }
+    @if (ViewData["IsSuccess"] != null && (bool)ViewData["IsSuccess"] == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            Something Went Wrong!
+        </div>
+    }
+    <div class="col-auto">
+        <label for="barcode" class="visually-hidden"></label>
+        <input type="file" name="postedFile" class="form-control" id="sheet" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Upload</button>
+    </div>
+</form>
+<hr />
+<label> You can manually upload data by using the below form</label>
+<hr />
+<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Save">
+     @if (ViewData["IsSave"] != null && (bool)ViewData["IsSave"] == true)
+    {
+        <div class="alert alert-success" role="alert">
+            Data Uploaded Successfully.
+        </div>
+    }
+    @if (ViewData["IsSave"] != null && (bool)ViewData["IsSave"] == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            Something Went Wrong!
+        </div>
+    }
+
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Bar Code</label>
+        <input type="text" class="form-control" id="barcode" name="Barcode" placeholder="Enter BarCode" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">File Name</label>
+        <input type="text" class="form-control" id="fileName" name="Filename" placeholder="Enter File Name" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Department Name</label>
+        <input type="text" class="form-control" id="departmentName" name="Department" placeholder="Enter Department Name" required>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </div>
+</form>
