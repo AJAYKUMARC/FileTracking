@@ -113,7 +113,7 @@ namespace FileTracking
                 return View();
             }
             var result = context.Masters.Where(x => x.Barcode == barCode).ToList();
-            if (result.Count > 0)
+            if (result.Count <= 0)
             {
                 ViewData["DataFound"] = false;
             }
@@ -151,6 +151,11 @@ namespace FileTracking
                 ViewData["IsSave"] = false;
                 return View("Upload");
             }
+        }
+
+        public IActionResult GetAll()
+        {
+            return View("Search",context.Masters.ToList());
         }
     }
 }

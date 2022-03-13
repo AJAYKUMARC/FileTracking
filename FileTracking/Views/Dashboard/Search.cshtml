@@ -1,12 +1,15 @@
 ﻿@using FileTracking.Models
 @model IList<Master>;
-<form class="row g-3">
+<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Search">
     <div class="col-auto">
         <label for="barcode" class="visually-hidden"></label>
-        <input type="text" class="form-control" id="barcode" name="barCode" placeholder="BAR CODE">
+        <input type="text" class="form-control" id="barcode" name="barCode" placeholder="BAR CODE" required>
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+    <div class="col-auto" style="MARGIN-TOP: 2%;">
+        <a href="@Url.Action("GetAll","Dashboard")" class="link-primary">Get All</a>
     </div>
 </form>
 <div>
