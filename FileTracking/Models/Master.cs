@@ -10,5 +10,6 @@ namespace FileTracking.Models
         public string Barcode { get; set; } = null!;
         public string Filename { get; set; } = null!;
         public string Department { get; set; } = null!;
+        public string? Comment { get; set; }
     }
 }

@@ -40,6 +40,11 @@ namespace FileTracking.Models
                     .IsUnicode(false)
                     .HasColumnName("BARCODE");
 
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(350)
+                    .IsUnicode(false)
+                    .HasColumnName("COMMENT");
+
                 entity.Property(e => e.Department)
                     .HasMaxLength(350)
                     .IsUnicode(false)

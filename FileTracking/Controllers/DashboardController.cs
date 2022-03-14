@@ -11,6 +11,8 @@ namespace FileTracking
         private readonly dbFileTrackerContext context;
         public IConfiguration configuration { get; set; }
         private IWebHostEnvironment environment { get; set; }
+
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         public DashboardController(IConfiguration configuration, IWebHostEnvironment environment, dbFileTrackerContext context)
         {
             this.configuration = configuration;
@@ -62,7 +64,7 @@ namespace FileTracking
 
                                 //Read Data from First Sheet.
                                 connExcel.Open();
-                                cmdExcel.CommandText = "SELECT BARCODE,FILENAME,DEPARTMENT,'" + DateTime.UtcNow + "' AS UPLOADDATE From [" + sheetName + "]";
+                                cmdExcel.CommandText = "SELECT BARCODE,FILENAME,DEPARTMENT,'" + TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE) + "' AS UPLOADDATE,COMMENT From [" + sheetName + "]";
                                 odaExcel.SelectCommand = cmdExcel;
                                 odaExcel.Fill(dt);
                                 connExcel.Close();
@@ -85,7 +87,7 @@ namespace FileTracking
                             sqlBulkCopy.ColumnMappings.Add("FILENAME", "FILENAME");
                             sqlBulkCopy.ColumnMappings.Add("DEPARTMENT", "DEPARTMENT");
                             sqlBulkCopy.ColumnMappings.Add("UPLOADDATE", "UPLOADDATE");
-
+                            sqlBulkCopy.ColumnMappings.Add("COMMENT", "COMMENT");
                             con.Open();
                             sqlBulkCopy.WriteToServer(dt);
                             con.Close();
@@ -135,17 +137,17 @@ namespace FileTracking
                     ViewData["IsSave"] = false;
                     return View("Upload");
                 }
-                if (context.Masters.Any(x => x.Barcode == data.Barcode))
-                {
-                    var existingRecord = context.Masters.FirstOrDefault(X => X.Barcode == data.Barcode);
-                    existingRecord.Uploaddate = DateTime.UtcNow;
-                    existingRecord.Filename = data.Filename;
-                    existingRecord.Department = data.Department;
-                    context.SaveChanges();
-                    ViewData["IsSave"] = true;
-                    return View("Upload");
-                }
-                data.Uploaddate = DateTime.UtcNow;
+                //if (context.Masters.Any(x => x.Barcode == data.Barcode))
+                //{
+                //    var existingRecord = context.Masters.FirstOrDefault(X => X.Barcode == data.Barcode);
+                //    existingRecord.Uploaddate = DateTime.UtcNow;
+                //    existingRecord.Filename = data.Filename;
+                //    existingRecord.Department = data.Department;
+                //    context.SaveChanges();
+                //    ViewData["IsSave"] = true;
+                //    return View("Upload");
+                //}
+                data.Uploaddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE); ;
                 context.Masters.Add(data);
                 var count = context.SaveChanges();
                 if (count > 0)
