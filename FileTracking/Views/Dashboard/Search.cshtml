@@ -1,17 +1,43 @@
 ﻿@using FileTracking.Models
 @model IList<Master>;
-<form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Search">
-    <div class="col-auto">
-        <label for="barcode" class="visually-hidden"></label>
-        <input type="text" class="form-control" id="barcode" name="barCode" placeholder="BAR CODE" required>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Search</button>
-    </div>
-    <div class="col-auto" style="MARGIN-TOP: 2%;">
-        <a href="@Url.Action("GetAll","Dashboard")" class="link-primary">Get All</a>
-    </div>
-</form>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <form class="row g-3" method="post" asp-controller="Dashboard" asp-action="Search">
+                    <div class="col-auto">
+                        <label for="barcode" class="visually-hidden"></label>
+                        <input type="text" class="form-control" id="barcode" name="barCode" placeholder="BAR CODE" required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Search</button>
+                    </div>
+                </form>
+            </td>
+            <td colspan=2></td>
+            <td>
+                <form class="row g-3" method="post" asp-controller="Dashboard" asp-action="SearchByDate">
+                    <div class="col-auto">
+                        <label for="barcode" class="visually-hidden"></label>
+                        <input type="date" class="form-control" id="stDate" name="startDate" placeholder="Start Date" required>
+                    </div>
+                    <div class="col-auto">
+                        <label for="barcode" class="visually-hidden"></label>
+                        <input type="date" class="form-control" id="edDate" name="endDate" placeholder="End Date" required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Search</button>
+                    </div>
+                     <div class="col-auto" style="MARGIN-TOP: 3%;">
+                        <a href="@Url.Action("GetAll","Dashboard")" class="link-primary">Get All</a>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
 <div>
     @if (Model != null && Model.Count > 0)
     {

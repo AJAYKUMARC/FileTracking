@@ -122,6 +122,15 @@ namespace FileTracking
             return View(result);
         }
 
+        public IActionResult SearchByDate(DateTime startDate, DateTime endDate)
+        {
+            var result = context.Masters.Where(x => x.Uploaddate.Date >= startDate.Date && x.Uploaddate.Date <= endDate.Date).ToList();
+            if (result.Count <= 0)
+            {
+                ViewData["DataFound"] = false;
+            }
+            return View("Search", result);
+        }
         public IActionResult Upload()
         {
             return View();
